@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nature's Keepers Game</title>
     <style>
-        /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -30,7 +29,6 @@
     </div>
 
     <script>
-        // Add your JavaScript logic here
         function startGame() {
             var playerName = document.getElementById("playerName").value;
             alert("Welcome, " + playerName + "! You are now a guardian of the forest.");
@@ -39,17 +37,17 @@
 
         function exploreForest() {
             alert("You embark on a journey through the enchanted forest.");
-            // Simulated encounter with a threat
+            // Threat goes here
             var threats = ['Invasive species', 'Pollution', 'Illegal logging', 'Natural disasters'];
             var threat = threats[0];
             alert("You encounter a " + threat + "!");
-            // Simulated resolution (for simplicity)
+            // Resolution (Exp, removal of invasive species, etc)
             alert("You successfully handle the threat and gain experience.");
             // TODO: Implement more complex gameplay logic
         }
 
         function viewPlayerInfo() {
-            // Simulated player info display
+            // Player info display
             var playerName = document.getElementById("playerName").value;
             var playerLevel = 1;
             var playerAbilities = [];
