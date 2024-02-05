@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature's Keepers Game</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #game-menu {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Nature's Keepers Game</h1>
+    
+    <label for="playerName">Enter your name:</label>
+    <input type="text" id="playerName">
+    <button onclick="startGame()">Start Game</button>
+
+    <div id="game-menu" style="display: none;">
+        <h2>Game Menu</h2>
+        <button onclick="exploreForest()">1. Explore the forest</button>
+        <button onclick="viewPlayerInfo()">2. View player info</button>
+        <button onclick="exitGame()">3. Exit game</button>
+    </div>
+
+    <script>
+        // Add your JavaScript logic here
+        function startGame() {
+            var playerName = document.getElementById("playerName").value;
+            alert("Welcome, " + playerName + "! You are now a guardian of the forest.");
+            document.getElementById("game-menu").style.display = "block";
+        }
+
+        function exploreForest() {
+            alert("You embark on a journey through the enchanted forest.");
+            // Simulated encounter with a threat
+            var threats = ['Invasive species', 'Pollution', 'Illegal logging', 'Natural disasters'];
+            var threat = threats[0];
+            alert("You encounter a " + threat + "!");
+            // Simulated resolution (for simplicity)
+            alert("You successfully handle the threat and gain experience.");
+            // TODO: Implement more complex gameplay logic
+        }
+
+        function viewPlayerInfo() {
+            // Simulated player info display
+            var playerName = document.getElementById("playerName").value;
+            var playerLevel = 1;
+            var playerAbilities = [];
+            alert("--- Player Info ---\nName: " + playerName + "\nLevel: " + playerLevel + "\nAbilities: " + playerAbilities.join(', '));
+        }
+
+        function exitGame() {
+            alert("Exiting the game. Goodbye!");
+            window.location.reload(); // For simplicity, refresh the page to restart the game
+        }
+    </script>
+</body>
+</html>
