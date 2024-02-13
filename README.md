@@ -31,3 +31,4 @@ The game also has a super cool ecosystem – plants and animals act like they do
 ●	Fun, educational, and eco-friendly gaming experience
 
 NOTE: The video explaining the code chunk is: https://github.com/CIDS-484-Spring-2024/Nature-s-Keepers/blob/main/Nature-s-Keepers_Milestone1.html%20at%20main%20·%20CIDS-484-Spring-2024_Nature-s-Keepers.mp4 
+(You will need to look at the raw, the video was too big to embed in the README)
