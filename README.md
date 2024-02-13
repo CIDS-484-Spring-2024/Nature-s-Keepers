@@ -30,4 +30,4 @@ The game also has a super cool ecosystem – plants and animals act like they do
 #  VIII. Goal:
 ●	Fun, educational, and eco-friendly gaming experience
 
-NOTE: The video explaining the code chunk is: 
+NOTE: The video explaining the code chunk is: https://github.com/CIDS-484-Spring-2024/Nature-s-Keepers/edit/main/README.md 
