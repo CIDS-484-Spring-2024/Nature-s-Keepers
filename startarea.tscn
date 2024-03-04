@@ -1,0 +1,62 @@
+[gd_scene load_steps=13 format=3 uid="uid://dsahmwgj2gvro"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_5o4vx"]
+[ext_resource type="Resource" path="res://terraindata/data.hterrain" id="2_enjlf"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_88gdh"]
+[ext_resource type="Texture2D" uid="uid://ndjk0rgpgtw" path="res://addons/textures/textures/startarea_slot0_albedo_bump.png" id="4_15vdl"]
+[ext_resource type="Texture2D" uid="uid://d0anjmidytay6" path="res://addons/textures/textures/startarea_slot1_albedo_bump.png" id="5_osdyi"]
+[ext_resource type="Texture2D" uid="uid://y7l8g7abldat" path="res://addons/textures/textures/startarea_slot0_normal_roughness.png" id="6_h6fja"]
+[ext_resource type="Texture2D" uid="uid://2uhyupgr26m2" path="res://addons/textures/textures/startarea_slot1_normal_roughness.png" id="7_ksntu"]
+[ext_resource type="PackedScene" uid="uid://b4oadvo6uxv7q" path="res://Player.tscn" id="8_qtwvc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yt5ab"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_tqpdo"]
+sky_material = SubResource("ProceduralSkyMaterial_yt5ab")
+
+[sub_resource type="Environment" id="Environment_pwvv8"]
+background_mode = 2
+sky = SubResource("Sky_tqpdo")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_sjgtr"]
+script = ExtResource("3_88gdh")
+mode = 0
+textures = [[ExtResource("4_15vdl"), ExtResource("5_osdyi")], [ExtResource("6_h6fja"), ExtResource("7_ksntu")]]
+
+[node name="Startarea" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pwvv8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.993709, -0.111989, 0, 0.111989, -0.993709, 6.91383, 10.5665, 8.29619)
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_5o4vx")
+_terrain_data = ExtResource("2_enjlf")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_sjgtr")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("8_qtwvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 10)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+
+[connection signal="input_event" from="CharacterBody3D" to="HTerrain" method="_on_character_body_3d_input_event"]
