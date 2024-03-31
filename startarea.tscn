@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dsahmwgj2gvro"]
+[gd_scene load_steps=13 format=3 uid="uid://65i8jjc2dy44"]
 
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_5o4vx"]
 [ext_resource type="Resource" path="res://terraindata/data.hterrain" id="2_enjlf"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d0anjmidytay6" path="res://addons/textures/textures/startarea_slot1_albedo_bump.png" id="5_osdyi"]
 [ext_resource type="Texture2D" uid="uid://y7l8g7abldat" path="res://addons/textures/textures/startarea_slot0_normal_roughness.png" id="6_h6fja"]
 [ext_resource type="Texture2D" uid="uid://2uhyupgr26m2" path="res://addons/textures/textures/startarea_slot1_normal_roughness.png" id="7_ksntu"]
-[ext_resource type="PackedScene" uid="uid://b4oadvo6uxv7q" path="res://Player.tscn" id="8_qtwvc"]
+[ext_resource type="PackedScene" path="res://Player.tscn" id="8_qtwvc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yt5ab"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -56,7 +56,9 @@ shader_params/u_tile_reduction = null
 [node name="CharacterBody3D" parent="." instance=ExtResource("8_qtwvc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 10)
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+[node name="Head" type="Node3D" parent="CharacterBody3D"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
 
 [connection signal="input_event" from="CharacterBody3D" to="HTerrain" method="_on_character_body_3d_input_event"]
