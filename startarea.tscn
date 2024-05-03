@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://65i8jjc2dy44"]
+[gd_scene load_steps=27 format=3 uid="uid://65i8jjc2dy44"]
 
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_5o4vx"]
+[ext_resource type="Script" path="res://startarea.gd" id="1_thuem"]
 [ext_resource type="Resource" path="res://terraindata/data.hterrain" id="2_enjlf"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_88gdh"]
 [ext_resource type="Texture2D" uid="uid://ndjk0rgpgtw" path="res://addons/textures/textures/startarea_slot0_albedo_bump.png" id="4_15vdl"]
@@ -8,6 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://y7l8g7abldat" path="res://addons/textures/textures/startarea_slot0_normal_roughness.png" id="6_h6fja"]
 [ext_resource type="Texture2D" uid="uid://2uhyupgr26m2" path="res://addons/textures/textures/startarea_slot1_normal_roughness.png" id="7_ksntu"]
 [ext_resource type="PackedScene" path="res://Player.tscn" id="8_qtwvc"]
+[ext_resource type="ArrayMesh" uid="uid://b07iwp1rh58kw" path="res://Tree_1.obj" id="9_vvcfq"]
+[ext_resource type="Script" path="res://AnimationPlayer.gd" id="10_1n5m4"]
+[ext_resource type="Texture2D" uid="uid://c8um5sfgpd1xt" path="res://addons/textures/textures/wood_0025_color_1k.jpg" id="10_wgsgf"]
+[ext_resource type="Script" path="res://AnimationPlayer2.gd" id="12_lnbkx"]
+[ext_resource type="PackedScene" uid="uid://d2yb84ererjvi" path="res://coin.glb" id="13_gjpld"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yt5ab"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -27,7 +33,89 @@ script = ExtResource("3_88gdh")
 mode = 0
 textures = [[ExtResource("4_15vdl"), ExtResource("5_osdyi")], [ExtResource("6_h6fja"), ExtResource("7_ksntu")]]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67867"]
+albedo_texture = ExtResource("10_wgsgf")
+
+[sub_resource type="Animation" id="Animation_sa8b6"]
+resource_name = "tree_grow"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(16.037, -20, 24.485), Vector3(16.037, 4.11573, 24.4846)]
+}
+
+[sub_resource type="Animation" id="Animation_y77bb"]
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(29.9265, -19.9918, 36.8324), Vector3(29.5317, 4.11573, 37.5623)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vkin5"]
+_data = {
+"tree_grow": SubResource("Animation_sa8b6"),
+"tree_grow2": SubResource("Animation_y77bb")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svyvc"]
+albedo_texture = ExtResource("10_wgsgf")
+
+[sub_resource type="Animation" id="Animation_hn537"]
+resource_name = "coin_spin"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jf2sm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wexh5"]
+_data = {
+"RESET": SubResource("Animation_jf2sm"),
+"coin_spin": SubResource("Animation_hn537")
+}
+
 [node name="Startarea" type="Node3D"]
+script = ExtResource("1_thuem")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pwvv8")
@@ -53,12 +141,43 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("8_qtwvc")]
+[node name="Player" parent="." instance=ExtResource("8_qtwvc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 10)
 
-[node name="Head" type="Node3D" parent="CharacterBody3D"]
+[node name="Head" type="Node3D" parent="Player"]
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
 
-[connection signal="input_event" from="CharacterBody3D" to="HTerrain" method="_on_character_body_3d_input_event"]
+[node name="Tree1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.037, -22.9908, 24.4846)
+material_override = SubResource("StandardMaterial3D_67867")
+mesh = ExtResource("9_vvcfq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree1"]
+libraries = {
+"": SubResource("AnimationLibrary_vkin5")
+}
+script = ExtResource("10_1n5m4")
+
+[node name="Tree2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5317, -22.1984, 37.5623)
+material_override = SubResource("StandardMaterial3D_svyvc")
+mesh = ExtResource("9_vvcfq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree2"]
+libraries = {
+"": SubResource("AnimationLibrary_vkin5")
+}
+script = ExtResource("12_lnbkx")
+
+[node name="coin2" parent="." instance=ExtResource("13_gjpld")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.8122, 0.459358, 12.5536)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="coin2"]
+libraries = {
+"": SubResource("AnimationLibrary_wexh5")
+}
+script = ExtResource("10_1n5m4")
+
+[connection signal="input_event" from="Player" to="HTerrain" method="_on_character_body_3d_input_event"]
